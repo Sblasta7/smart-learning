@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    background-color: #ddccd9;
+}
+
+.form-popup {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+    max-width: 720px;
+    width: 100%;
+    background: #fff;
+    border: 2px solid #fff;
+    transform: translate(-50%, -70%);
+}
+
+.form-popup .form-box {
+    display: flex;
+}
+
+.form-box .form-details {
+    max-width: 330px;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: url("/images/2853458.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.form-box h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-box .form-content {
+    width: 100%;
+    padding: 35px;
+}
+
+form .input-field {
+    height: 50px;
+    width: 100%;
+    margin-top: 20px;
+    position: relative;
+}
+
+form .input-field input {
+    width: 100%;
+    height: 100%;
+    background: none;
+    outline: none;
+    padding: 0 15px;
+    font-size: .95rem;
+    border-radius: 3px;
+    border: 1px solid #717171;
+}
+
+form .input-field input:focus {
+    border: 1px solid #00bcd4;
+}
+
+form .input-field input:focus,
+form .input-field input:valid {
+    padding: 16px 15px 0;
+}
+
+form .input-field label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    color: #717171;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: .2s ease;
+}
+
+.form-box .input-field input:focus ~ label,
+.form-box .input-field input:valid ~ label {
+    color: #00bcd4;
+    font-size: .75rem;
+    transform: translateY(-120%);
+}
+
+.form-box a {
+    color: #00bcd4;
+    text-decoration: none;
+}
+
+.form-box a:hover {
+    text-decoration: underline;
+}
+
+.form-box .forgot-pass {
+    display: inline-flex;
+    margin-top: 14px;
+    font-size: .95rem;
+}
+
+form button {
+    width: 100%;
+    outline: none;
+    border: 1rem;
+    font-weight: 600;
+    padding: 14px 0;
+    border-radius: 3px;
+    margin: 25px 0;
+    color: #fff;
+    cursor: pointer;
+    background: #00bcd4;
+}
+
+form button:hover {
+    background: #0097a7;
+}
+
+.form-box .bottom-link {
+    text-align: center;
+}
+
+@media (max-width: 760px){
+    .form-popup{
+        top: 55%;
+        width: 90%;
+    }
+
+    .form-box .form-details{
+        display: none;
+    }
+
+    .form-box .form-content{
+        padding: 30px 20px;
+    }
+}
