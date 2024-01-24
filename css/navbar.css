@@ -69,12 +69,7 @@ nav ul a{
     }
  }
 
-@media (max-width:438px){
-    
-    .hideOnMobile{
-     display: none;
-    }
- }
+
 
  @media (max-width:438px){
     .sidebar{
@@ -83,5 +78,12 @@ nav ul a{
 
     .hideOnMobile{
      display: none;
+    }
+ }
+
+ @media (max-width:390px){
+    
+    .logo{
+     font-size: 1.75rem;
     }
  }
