@@ -32,6 +32,12 @@
     
 }
 
+.box-container .box:hover{
+    background-color: #0097a7;
+    color: #fff;
+    
+}
+
 .box-container .box i{
     font-size: 2rem;
     color: #0097a7;
@@ -42,6 +48,10 @@
     color: #000;
 }
 
+.box-container .box:hover i,
+.box-container .box:hover .content h3{
+    color: #fff;
+}
 @media (max-width:983px) {
     .box-container{
         display: grid;
