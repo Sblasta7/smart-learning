@@ -8,6 +8,8 @@ const dbConnection = require('./config/dbConnection');
 
 const mainRoute = require('./routes/mainRoutes');
 const authRoute = require('./routes/authRoutes');
+const userRoute = require('./routes/userRoutes');
+
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 dbConnection()
@@ -17,6 +19,8 @@ app.use(bp.urlencoded({extended: false}));
 
 app.use('/', mainRoute);
 app.use('/api/user/', authRoute);
+app.use('/api/user/', userRoute);
+
 
 
 app.use(notFound)

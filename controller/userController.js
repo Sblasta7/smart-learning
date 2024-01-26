@@ -1,103 +1,129 @@
-const { generateToken } = require('../config/jwtToken');
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
-
-
-
-const createUser = asyncHandler(
-    async (req, res) =>{
-        const {email} = req.body;
-    
-        const findUser = await User.findOne({email: email});
-        console.log(req.body)
-        if(!findUser){
-            //CREATE USER
-            const newUser = User.create(req.body);
-            res.json(newUser)
-        }
-        else{
-            
-            //User exists
-            throw new Error('User Already Exists');
-        }
-    }    
-);
-
-const loginUser = asyncHandler(
-    async (req, res) =>{
-        const {email, password} = req.body;
-
-        const findUser = await User.findOne({email: email});
-        
-        if(findUser && (await findUser.isPasswordMatched(password))){
-            res.json({
-                id: findUser?._id,
-                name: findUser?.name,
-                email: findUser?.email,
-                token: generateToken(findUser?.id)
-            })
-        }else{
-            throw new Error('Invalid Credentials')
-        }
-    }
-);
+const validateMongodbId = require('../utils/validateMongodbid');
+validateMongodbId 
 
 const findById = asyncHandler(
     async(req, res) =>{
-        const id = req.params;
+        const {id} = req.params;
+        try {
+            console.log(id);
+            const findUser = await User.findById(id);
 
-        const findUser = await User.findOne({_id:id});
-
-        if(findUser){
             res.json(findUser)
-        }else{
-            throw new Error('Invalid Credentials')
+            
+        } catch (error) {
+            throw new Error(error)
+        
         }
     }
 );
 
-const findAll = asyncHandler(
+const getAllUsers = asyncHandler(
     async(req, res) =>{
-        const id = req.params;
+        
+        try {
+            const getUsers = await User.find();
 
-        const findUsers = await User.find();
-
-        if(findUser){
-            res.json(findUser)
-        }else{
-            throw new Error('No users found')
+            if(getUsers){
+                res.json(getUsers)
+            }else{
+                throw new Error('No users found')
+            }
+        } catch (error) {
+            throw new Error(error)
         }
     }
 );
 
 const updateUser = asyncHandler(
     async(req, res) =>{
-        const id = req.params;
+        const {id} = req.user;
+        validateMongodbId(id);
+        try {
+            const findUser = await User.findByIdAndUpdate(id, 
+                {
+                    email:req?.body?.email,
+                },
+                {new: true}
+            );
 
-        const findUsers = await User.find();
-
-        if(findUser){
-            res.json(findUser)
-        }else{
-            throw new Error('No users found')
+            res.json(findUser);
+        } catch (error) {
+            throw new Error(error);
         }
+        
     }
 );
 
 const deleteUser = asyncHandler(
     async(req, res) =>{
-        const id = req.params;
+        const {id} = req.user;
 
-        const findUsers = await User.find();
+        validateMongodbId(id);
+        try {
+            
+            const findUser = await User.findByIdAndDelete(id);
 
-        if(findUser){
-            res.json(findUser)
-        }else{
-            throw new Error('No users found')
+            if(findUser){
+                res.json(findUser)
+            }else{
+                throw new Error('No users found')
+            }
+        } catch (error) {
+            
         }
     }
 );
 
 
+const blockUser = asyncHandler(
+    async(req, res) =>{
+        const {id} = req.params;
+        validateMongodbId(id);
+        try{
+            const block = await User.findByIdAndUpdate(
+                id, 
+                {
+                    isBlocked:true
+                },
+                {
+                    new: true,
+                }
+            );
 
-module.exports = {createUser, loginUser, findById, findAll, updateUser, deleteUser};
+            res.json({
+                "message": "User blocked"
+            });
+        }catch(err){
+            throw new Error(err)
+        }
+    }
+);
+
+const unBlockUser = asyncHandler(
+    async(req, res) =>{
+        const {id} = req.params;
+        validateMongodbId(id);
+        try{
+            const unBlock = await User.findByIdAndUpdate(
+                id, 
+                {
+                    isBlocked:false
+                },
+                {
+                    new: true,
+                }
+            );
+
+            res.json({
+                "message": "User unblocked"
+            });
+        }catch(err){
+            throw new Error(err)
+        }
+    }
+)
+
+
+module.exports = {findById, getAllUsers, updateUser, deleteUser, blockUser, unBlockUser};

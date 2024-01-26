@@ -1,13 +1,18 @@
-const { findById, findAll, updateUser, deleteUser } = require('../controller/userController');
+const { findById, getAllUsers, updateUser, deleteUser, blockUser, unBlockUser } = require('../controller/userController');
+const {authMiddleware, isAdmin} = require('../middleware/authMiddleware');
 
 const router = require('express').Router();
 
-router.get('/users', findAll);
+router.get('/users', getAllUsers);
 
-router.get('/:id', findById);
+router.get('/:id', authMiddleware, isAdmin, findById);
 
-router.put('/:id/update', updateUser);
+router.put('/edit-user', authMiddleware, updateUser);
 
-router.delete('/:id/delete', deleteUser);
+router.delete('/:id', deleteUser);
+
+router.put('/block-user/:id', authMiddleware, isAdmin, blockUser);
+
+router.put('/unblock-user/:id', authMiddleware, isAdmin, unBlockUser);
 
 module.exports = router;

@@ -5,7 +5,6 @@ var userSchema = new mongoose.Schema({
     name:{
         type:String,
         required:true,
-        unique:true,
         index:true,
     }, 
     email:{
@@ -21,7 +20,12 @@ var userSchema = new mongoose.Schema({
         type:String,
         default:'user',
     },
-});
+    isBlocked:{
+        type: Boolean,
+        default: false
+    }
+},
+{timestamps: true});
 
 userSchema.pre('save', async function(next) {
     const salt = await bcrypt.genSalt(10);
