@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const validateMongodbId = require('../utils/validateMongodbid');
-validateMongodbId 
 
 const findById = asyncHandler(
     async(req, res) =>{
@@ -45,7 +44,9 @@ const updateUser = asyncHandler(
                 {
                     email:req?.body?.email,
                 },
-                {new: true}
+                {
+                    new: true
+                }
             );
 
             res.json(findUser);
