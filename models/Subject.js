@@ -8,7 +8,9 @@ var subjectSchema = new mongoose.Schema({
         unique:true,
         index:true,
     },
-});
+},
+{timestamps: true}
+);
 
 //Export the model
 module.exports = mongoose.model('Subject', subjectSchema);

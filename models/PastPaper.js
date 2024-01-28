@@ -26,7 +26,8 @@ var pastPaperSchema = new mongoose.Schema({
         ref: "Subject",
         required:true,
     },
-});
+},
+{timestamps: true});
 
 //Export the model
 module.exports = mongoose.model('PastPaper', pastPaperSchema);

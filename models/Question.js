@@ -23,7 +23,8 @@ var questionSchema = new mongoose.Schema({
         ref: "PastPaper",
         required:true,
     },
-});
+},
+{timestamps: true});
 
 //Export the model
 module.exports = mongoose.model('Question', questionSchema);
