@@ -12,6 +12,8 @@ const mainRoute = require('./routes/mainRoutes');
 const authRoute = require('./routes/authRoutes');
 const userRoute = require('./routes/userRoutes');
 const subjectRoute = require('./routes/subjectRoutes');
+const questionRoute = require('./routes/questionRouter')
+const pastPaperRoute = require('./routes/pastPaperRoutes')
 
 
 const { notFound, errorHandler } = require('./middleware/errorHandler');
@@ -27,7 +29,9 @@ app.use(cookieParser());
 app.use('/', mainRoute);
 app.use('/api/user/', authRoute);
 app.use('/api/user/', userRoute);
-app.use('/api/subject', subjectRoute)
+app.use('/api/subject', subjectRoute);
+app.use('/api/past-paper', pastPaperRoute);
+app.use('/api/question', questionRoute);
 
 
 app.use(notFound)

@@ -1,12 +1,11 @@
 const router = require('express').Router();
 const {authMiddleware, isAdmin} = require('../middleware/authMiddleware');
-const {create, getAllSubjects, getSubjectById, updateSubject, deleteSubject} = require('../controller/subjectController')
+const { create, getAllSubjects, getSubjectById, updateSubject, deleteSubject } = require('../controller/subjectController')
 
-router.get('/');
 
-router.get('/:id')
+router.get('/', authMiddleware, isAdmin, getAllSubjects);
 
-router.get('/create', authMiddleware, isAdmin);
+router.get('/:id', authMiddleware, isAdmin, getSubjectById)
 
 router.post('/create', authMiddleware, isAdmin, create);
 

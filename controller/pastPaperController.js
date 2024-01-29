@@ -80,4 +80,4 @@ const deletePastPaper = asyncHandler(
     }
 );
 
-module.export = { create, findById, getAllPastPapers, updatePastPaper, deletePastPaper };
+module.exports = { create, findById, getAllPastPapers, updatePastPaper, deletePastPaper };

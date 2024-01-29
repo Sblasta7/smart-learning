@@ -3,7 +3,7 @@ const {authMiddleware, isAdmin} = require('../middleware/authMiddleware');
 
 const router = require('express').Router();
 
-router.get('/users', getAllUsers);
+router.get('/users', authMiddleware, isAdmin, getAllUsers);
 
 router.get('/:id', authMiddleware, isAdmin, findById);
 
