@@ -15,7 +15,7 @@ const createUser = asyncHandler(
         console.log(req.body)
         if(!findUser){
             //CREATE USER
-            const newUser = User.create(req.body);
+            const newUser = await User.create(req.body);
             res.json(newUser)
         }
         else{

@@ -6,10 +6,10 @@ const create = asyncHandler(
     async (req, res) =>{
         const {description} = req.body;
         try {
-            const findPastPaper = PastPaper.findOne({description: description});
+            const findPastPaper = await PastPaper.findOne({description: description});
 
             if (!findPastPaper){
-                const createPastPaper = PastPaper.create(req.body);
+                const createPastPaper = await PastPaper.create(req.body);
                 res.json(createPastPaper);
             }
             else{
@@ -23,9 +23,11 @@ const create = asyncHandler(
 
 const findById = asyncHandler(
     async (req, res) =>{
-        const {id} = req.body;
+        const {id} = req.params;
         try {
-            const findPastPaper = PastPaper.findById(id);
+            const findPastPaper = await PastPaper
+                .findById(id)
+                .populate('subject');
             res.json(findPastPaper);
         } catch (error) {
             throw new Error(error);
@@ -36,11 +38,37 @@ const findById = asyncHandler(
 const getAllPastPapers = asyncHandler(
     async (req, res) =>{
 
-        try {
-            const findAll = PastPaper.find();
-            res.json(findAll);
-        } catch (error) {
-            throw new Error(error);
+        if (req.query && Object.keys(req.query).length > 0) {
+            // Handle subject query
+            try {
+                const findPastPapers = await PastPaper
+                    .find(req.query)
+                    .populate("subject");
+                res.json(findPastPapers);
+            } catch (err) {
+                throw new Error(err);
+            }
+        } else {
+            // Handle getting all past papers
+            try {
+                const findAll = await PastPaper
+                    .find()
+                    .populate("subject");
+                res.json(findAll);
+            } catch (error) {
+                throw new Error(error);
+            }
+        }
+    }
+);
+
+const subjectQuery = asyncHandler(
+    async (req, res) =>{
+        try{
+            const findPastPapers = await PastPaper.find(req.query);
+            res.json(findPastPapers);
+        }catch(err){
+            throw new Error(err);
         }
     }
 );
@@ -51,7 +79,7 @@ const updatePastPaper = asyncHandler(
         const {id} = req.body;
         
         try {
-            const updatePaper = PastPaper.findByIdAndUpdate(id,
+            const updatePaper = await PastPaper.findByIdAndUpdate(id,
                 {
                     description: req?.body?.description
                 },
@@ -72,7 +100,7 @@ const deletePastPaper = asyncHandler(
         const {id} = req.body;
         
         try {
-            const deletePaper = PastPaper.findByIdAndDelete(id);
+            const deletePaper = await PastPaper.findByIdAndDelete(id);
             res.json(deletePaper);
         } catch (error) {
             throw new Error(error);
@@ -80,4 +108,4 @@ const deletePastPaper = asyncHandler(
     }
 );
 
-module.exports = { create, findById, getAllPastPapers, updatePastPaper, deletePastPaper };
+module.exports = { create, findById, getAllPastPapers, updatePastPaper, deletePastPaper, subjectQuery };

@@ -5,10 +5,9 @@ var pastPaperSchema = new mongoose.Schema({
     description:{
         type:String,
         required:true,
-        unique:true,
         index:true,
     },
-    date:{
+    year:{
         type:String,
         required:true,
     },
@@ -21,7 +20,7 @@ var pastPaperSchema = new mongoose.Schema({
         required: true,
         unique:true
     },
-    subject_id:{
+    subject:{
         type:mongoose.Schema.Types.ObjectId,
         ref: "Subject",
         required:true,

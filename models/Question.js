@@ -9,7 +9,7 @@ var questionSchema = new mongoose.Schema({
         index:true,
     },
     question_number:{
-        type:number,
+        type:String,
         required:true,
         unique:true,
     },
@@ -18,7 +18,7 @@ var questionSchema = new mongoose.Schema({
         required:true,
         unique:true,
     },
-    past_paper_id:{
+    past_paper:{
         type:mongoose.Schema.Types.ObjectId,
         ref: "PastPaper",
         required:true,

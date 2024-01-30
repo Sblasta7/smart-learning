@@ -29,9 +29,9 @@ app.use(cookieParser());
 app.use('/', mainRoute);
 app.use('/api/user/', authRoute);
 app.use('/api/user/', userRoute);
-app.use('/api/subject', subjectRoute);
-app.use('/api/past-paper', pastPaperRoute);
-app.use('/api/question', questionRoute);
+app.use('/api/subject/', subjectRoute);
+app.use('/api/past-paper/', pastPaperRoute);
+app.use('/api/question/', questionRoute);
 
 
 app.use(notFound)

@@ -10,7 +10,9 @@ var subjectSchema = new mongoose.Schema({
     },
 },
 {timestamps: true}
+
 );
+subjectSchema.index({ description: 'text' }); // Index the 'description' field for text search
 
 //Export the model
 module.exports = mongoose.model('Subject', subjectSchema);

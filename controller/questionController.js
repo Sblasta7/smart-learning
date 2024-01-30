@@ -7,10 +7,10 @@ const create = asyncHandler(
     async (req, res) => {
         const {description} = req.body
         try{
-            const findQuestion = Question.findOne({description: description});
+            const findQuestion = await Question.findOne({description: description});
 
             if(!findQuestion){
-                const createQuestion = Question.create(req.body);
+                const createQuestion = await Question.create(req.body);
 
                 res.json(createQuestion);
             }else{
@@ -27,7 +27,7 @@ const findById = asyncHandler(
         const {id} = req.params;
         validateMongodbId(id);
         try{
-            const findQuestion = Question.findById(id);
+            const findQuestion = await Question.findById(id);
 
             res.json(findQuestion);
             
@@ -41,7 +41,7 @@ const findById = asyncHandler(
 const getAllQuestions = asyncHandler(
     async (req, res) => {
         try{
-            const findQuestions = Question.find();
+            const findQuestions = await Question.find();
 
             res.json(findQuestions);
             
@@ -58,7 +58,7 @@ const updateQuestion = asyncHandler(
         const {id} = req.params;
         validateMongodbId(id);
         try{
-            const updateQ = Question.findByIdAndUpdate(id, 
+            const updateQ = await Question.findByIdAndUpdate(id, 
                 {
                     description: req?.body?.description,
                     question_number: req?.body?.question_number,
@@ -85,7 +85,7 @@ const deleteQuestion = asyncHandler(
         const {id} = req.params;
         validateMongodbId(id);
         try{
-            const deleteQ = Question.findByIdAndDelete(id);
+            const deleteQ = await Question.findByIdAndDelete(id);
 
             res.json(deleteQ);
             
@@ -95,4 +95,4 @@ const deleteQuestion = asyncHandler(
     }
 );
 
-module.exports = { create,  findById, getAllQuestions, updateQuestion, deleteQuestion };
+module.exports = { create, findById, getAllQuestions, updateQuestion, deleteQuestion };

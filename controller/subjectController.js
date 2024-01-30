@@ -7,14 +7,19 @@ const create = asyncHandler(
         try{
             const {description} = req.body;
 
-            const findSubject = await Subject.create({description: description});
+            const findSubject = await Subject.findOne(
+                {
+                    description: description
+                }
+            );
 
             if(!findSubject){
-                const createSubject = await Subject.create(req.body)
+                const createSubject = await Subject.create(req.body);
+                
+                res.json(findSubject);
             }else{
                 throw new Error('subject exists');
             }
-            res.json(findSubject);
         }catch(err){
             throw new Error(err);
         }
@@ -51,7 +56,7 @@ const updateSubject = asyncHandler(
     async (req, res) => {
         const {id} = req.params;
         try {
-            const updateSub = Subject.findByIdAndUpdate(id, 
+            const updateSub = await Subject.findByIdAndUpdate(id, 
                 {
                     description:req?.body?.description
                 },
@@ -70,7 +75,7 @@ const deleteSubject = asyncHandler(
     async (req, res) => {
         const {id} = req.params;
         try {
-            const deleteSub = Subject.findByIdAndDelete(id);
+            const deleteSub = await Subject.findByIdAndDelete(id);
             res.json(deleteSub);  
         } catch (error) {
             throw new Error(err);

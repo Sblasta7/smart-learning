@@ -3,7 +3,7 @@ const {authMiddleware, isAdmin} = require('../middleware/authMiddleware');
 const { create, getAllSubjects, getSubjectById, updateSubject, deleteSubject } = require('../controller/subjectController')
 
 
-router.get('/', authMiddleware, isAdmin, getAllSubjects);
+router.get('/', getAllSubjects);
 
 router.get('/:id', authMiddleware, isAdmin, getSubjectById)
 
