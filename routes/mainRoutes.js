@@ -2,7 +2,13 @@ const router = require('express').Router();
 
 
 router.get('/', (req, res) =>{
-    res.send('mainRoute')
-});
+    //const token = req.cookies.jwt;
+    res.render('index');//,{
+    //     data:{
+    //         token
+    //     }
+    // });
+}
+);
 
 module.exports = router; 

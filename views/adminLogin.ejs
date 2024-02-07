@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+</head>
+<body>
+    <header>
+        <nav>
+          <ul class="sidebar">
+              <li onclick=hideSideBar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a></li>
+              <li><a href="/html/index.html">Home</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="/html/login.html">Sign-In</a></li>
+              <li><a href="#">Sign-Up</a></li>
+          </ul>
+          <ul>
+            <li class="hideOnMobile"><a href="/html/index.html">Home</a></li>
+            <li class="hideOnMobile"><a href="#">About</a></li>
+            <li class="hideOnMobile"><a href="/html/login.html">Sign-In</a></li>
+            <li class="hideOnMobile"><a href="#">Sign-Up</a></li>
+            <li class="menu-button" onclick=showSideBar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="28" viewBox="0 -960 960 960" width="28"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a></li>
+          </ul>
+          <h1 class="logo">smart learning</h1>
+        </nav>
+      </header>
+      <div class="form-popup">
+        <div class="form-box login">
+            <div class="form-details">
+                <h2>Welcome Back</h2>
+                <p>Please log in using your personal information to stay connected with us.</p>
+            </div>
+            <div class="form-content">
+                <h2>Sign-in</h2>
+                <form action="/api/auth/admin-login" method="post">
+                    <div class="input-field">
+                        <input type="email" name="email" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" name="password" required>
+                        <label>Password</label>
+                    </div>
+                    <a href="#" class="forget-pass">Forgot password?</a>
+                    <button type="submit">Log in</button>
+                </form>
+                <div class="bottom-link">
+                    Don't have an account? 
+                    <a href="/html/register.html">Sign-up</a>
+                </div>
+            </div>
+        </div>
+      </div>
+      <script src="/javascript/navbar.js"></script>   
+</body>
+</html>

@@ -37,28 +37,16 @@ const findById = asyncHandler(
 
 const getAllPastPapers = asyncHandler(
     async (req, res) =>{
-
-        if (req.query && Object.keys(req.query).length > 0) {
-            // Handle subject query
-            try {
-                const findPastPapers = await PastPaper
-                    .find(req.query)
-                    .populate("subject");
-                res.json(findPastPapers);
-            } catch (err) {
-                throw new Error(err);
-            }
-        } else {
-            // Handle getting all past papers
-            try {
-                const findAll = await PastPaper
-                    .find()
-                    .populate("subject");
-                res.json(findAll);
-            } catch (error) {
-                throw new Error(error);
-            }
+        try 
+        {
+            const findAll = await PastPaper
+                .find()
+                .populate("subject");
+            res.json(findAll);
+        } catch (error) {
+            throw new Error(error);
         }
+        
     }
 );
 

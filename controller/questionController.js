@@ -95,4 +95,11 @@ const deleteQuestion = asyncHandler(
     }
 );
 
-module.exports = { create, findById, getAllQuestions, updateQuestion, deleteQuestion };
+
+const uploadImages = asyncHandler(
+    async (req, res) =>{
+        console.log(`req.file: ${req?.files}`);
+    }
+);
+
+module.exports = { create, findById, getAllQuestions, updateQuestion, deleteQuestion, uploadImages };

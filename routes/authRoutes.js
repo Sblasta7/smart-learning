@@ -1,13 +1,23 @@
-const { createUser, loginUser, handleRefreshToken, logout} = require('../controller/authController');
+const { createUser, loginUser, loginAdmin, handleRefreshToken, logout, getSignUp, getSignIn, getLoginAdmin} = require('../controller/authController');
 
 const router = require('express').Router();
 
-router.post('/register', createUser)
 
-router.post('/login', loginUser)
 
-router.get('/refresh-token', handleRefreshToken)
+router.get('/sign-up', getSignUp);
 
-router.get('/logout', logout)
+router.get('/sign-in', getSignIn); 
+
+router.get('/admin-login', getLoginAdmin);
+
+router.post('/register', createUser);
+
+router.post('/login', loginUser);
+
+router.post('/admin-login', loginAdmin);
+
+router.get('/refresh-token', handleRefreshToken);
+
+router.get('/logout', logout);
 
 module.exports = router;

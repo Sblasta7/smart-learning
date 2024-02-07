@@ -5,12 +5,24 @@ const { generateRefreshToken } = require('../config/refreshtoken');
 const jwt = require('jsonwebtoken');
 
 
-            
+const getSignUp = (req, res) =>{
+        res.render('register');
+};           
+
+const getSignIn = (req, res) =>{
+        res.render('login');
+};
+
+const getLoginAdmin = (req, res) =>{
+    res.render('adminLogin');
+};
+
 
 const createUser = asyncHandler(
     async (req, res) =>{
         const {email} = req.body;
-    
+        req.body.name = 'test';
+        
         const findUser = await User.findOne({email: email});
         console.log(req.body)
         if(!findUser){
@@ -29,7 +41,6 @@ const createUser = asyncHandler(
 const loginUser = asyncHandler(
     async (req, res) =>{
         const {email, password} = req.body;
-
         const findUser = await User.findOne({email: email});
         
         if(findUser && (await findUser.isPasswordMatched(password))){
@@ -55,6 +66,8 @@ const loginUser = asyncHandler(
                 }
             );
 
+            
+
             res.json({
                 id: findUser?._id,
                 name: findUser?.name,
@@ -68,6 +81,54 @@ const loginUser = asyncHandler(
         }
     }
 );
+
+const loginAdmin = asyncHandler(
+    async(req, res) =>{
+        const {email, password} = req.body;
+
+        const findAdmin = await User.findOne({email:email});
+        
+        if(findAdmin.role !== 'admin') throw new Error('Not Authorised');
+        if(findAdmin && (await findAdmin.isPasswordMatched(password))){
+            const refreshToken = await generateRefreshToken(findAdmin?._id);
+ 
+            const updateuser = await User.findByIdAndUpdate(
+                findAdmin.id, 
+                {
+                    refreshToken: refreshToken
+                }, 
+                {
+                    new: true
+                }
+            );
+            
+            
+            res.cookie(
+                "refreshToken",
+                refreshToken,
+                {
+                    httpOnly: true,
+                    maxAge: 72 * 60 * 60 * 1000
+                }
+            );
+            
+            const accessToken = await generateToken(findAdmin?.id)
+
+            res.json({
+                id: findAdmin?._id,
+                name: findAdmin?.name,
+                email: findAdmin?.email,
+                token: accessToken,
+                r_token: refreshToken
+            });
+            
+        }else{
+            throw new Error('Invalid Credentials')
+        }
+    }
+ );
+
+
 
 const handleRefreshToken = asyncHandler(
     async (req, res) =>{
@@ -93,11 +154,10 @@ const handleRefreshToken = asyncHandler(
 
                 res.json({accessToken});
             }
-            );
-        
-        
+        );
     }
 );
+
 
 const logout = asyncHandler(
     async (req, res) => {
@@ -143,7 +203,5 @@ const logout = asyncHandler(
   );
   
  
-  
 
-
-module.exports = {createUser, loginUser, handleRefreshToken, logout};
+module.exports = {createUser, loginUser, loginAdmin, handleRefreshToken, logout, getSignUp, getSignIn, getLoginAdmin};

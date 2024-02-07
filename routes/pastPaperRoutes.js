@@ -3,7 +3,7 @@ const {authMiddleware, isAdmin} = require('../middleware/authMiddleware');
 const { create, findById, getAllPastPapers, updatePastPaper, deletePastPaper, subjectQuery } = require('../controller/pastPaperController')
 
 
-router.get('/', getAllPastPapers);
+router.get('/past-papers', authMiddleware, isAdmin, getAllPastPapers);
 
 router.get('/', subjectQuery);
 
