@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/subjects.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/subjects.css">
 </head>
 <body>
     <header>
@@ -36,35 +36,16 @@
         </div>
         <div class="main-content">
             <div class="container">
-                <a href="#">
-                    <div class="content">
-                        <div class="title">12</div>
-                    </div>
-                </a>
-                
-                <a href="#">
-                    <div class="content">
-                        <div class="title">11</div>
-                    </div>
-                </a>
-
-                <a href="#">
-                    <div class="content">
-                        <div class="title">10</div>
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="content">
-                        <div class="title">9</div>
-                    </div>
-                </a>
+                <%for(let i = 0; i < data.grades.length; i++){%>
+                    <a href="/api/past-paper/<%=data.grades[i]%>">
+                        <div class="content">
+                            <div class="title"><%=data.grades[i]%></div>
+                        </div>
+                    </a>
+                <%}%>
             </div>
-        </div>
-        
-        
+        </div>        
       </main>
-
-      
       <script src="../javascript/navbar.js"></script>
 </body>
 </html>

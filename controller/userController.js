@@ -2,9 +2,12 @@ const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const validateMongodbId = require('../utils/validateMongodbid');
 
+
+
 const findById = asyncHandler(
     async(req, res) =>{
         const {id} = req.params;
+        validateMongodbId(id);
         try {
             console.log(id);
             const findUser = await User.findById(id);

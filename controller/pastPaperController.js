@@ -2,6 +2,9 @@ const asyncHandler = require('express-async-handler');
 const PastPaper = require('../models/PastPaper');
 const validateMongodbId = require('../utils/validateMongodbid');
 
+const getCreatePastPaper = (req, res) =>{
+    res.render('add-past-paper');
+}
 const create = asyncHandler(
     async (req, res) =>{
         const {description} = req.body;
@@ -53,8 +56,24 @@ const getAllPastPapers = asyncHandler(
 const subjectQuery = asyncHandler(
     async (req, res) =>{
         try{
-            const findPastPapers = await PastPaper.find(req.query);
-            res.json(findPastPapers);
+            const grades = [];
+            const findPastPapers = await PastPaper.find();
+
+            findPastPapers.forEach(PastPaper => {
+                if(!grades.includes(PastPaper.grade)){
+                    grades.push(PastPaper.grade)
+                }
+            });
+
+            console.log(findPastPapers);
+            
+            res.render('grade',{
+                data:{
+                    grades
+                }
+            });
+
+            //res.json(findPastPapers);
         }catch(err){
             throw new Error(err);
         }
@@ -96,4 +115,4 @@ const deletePastPaper = asyncHandler(
     }
 );
 
-module.exports = { create, findById, getAllPastPapers, updatePastPaper, deletePastPaper, subjectQuery };
+module.exports = { create, findById, getAllPastPapers, updatePastPaper, deletePastPaper, subjectQuery, getCreatePastPaper };

@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const {authMiddleware, isAdmin} = require('../middleware/authMiddleware');
-const { create, findById, getAllPastPapers, updatePastPaper, deletePastPaper, subjectQuery } = require('../controller/pastPaperController')
+const { create, findById, getAllPastPapers, updatePastPaper, deletePastPaper, subjectQuery, getCreatePastPaper } = require('../controller/pastPaperController')
 
+
+router.get('/create', authMiddleware, isAdmin, getCreatePastPaper);
 
 router.get('/past-papers', authMiddleware, isAdmin, getAllPastPapers);
 
